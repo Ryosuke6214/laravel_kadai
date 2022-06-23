@@ -30,8 +30,7 @@
                     <div class="form-group row">
                         <label class="col-md-2">性別</label>
                         <div class="col-md-10">
-                            <input type="radio" class="form-check form-check-inline" name="gender" value="{{ old('gender') }}">男性
-                            <input type="radio" class="form-check form-check-inline" name="gender" value="{{ old('gender') }}">女性
+                            <input type="text" class="form-control" name="gender" value="{{ old('gender') }}">
                         </div>
                     </div>
                     <div class="form-group row">
