@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\profile;
+use App\Profile;
+use App\History2;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -28,9 +30,17 @@ class ProfileController extends Controller
         
         return redirect('admin/profile/create');
     }
+    
+    public function index(Request $request)
+    {
+      $posts = Profile::all();
+      
+      return view('admin.profile.index', ['posts' => $posts]);
+    }
+    
     public function edit(Request $request)
     {
-      // News Modelからデータを取得する
+      // Profile Modelからデータを取得する
       $profile = Profile::find($request->id);
       if (empty($profile)) {
         abort(404);    
@@ -50,6 +60,11 @@ class ProfileController extends Controller
 
       // 該当するデータを上書きして保存する
       $profile->fill($profile_form)->save();
+      
+      $history = new History2();
+      $history->profile_id = $profile->id;
+      $history->edited_at = Carbon::now();
+      $history->save();
 
       return redirect('admin/profile');
     }
